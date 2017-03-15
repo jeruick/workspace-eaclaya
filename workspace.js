@@ -68,6 +68,8 @@ cpdefine("inline:com-chilipeppr-workspace-eaclaya", ["chilipeppr_ready"], functi
                 setTimeout(function() { $(window).trigger('resize'); }, 100);
             });
             
+            this.loadLuaEditorWidget();
+            
             this.loadTemplateWidget();
             
             // Create our workspace upper right corner triangle menu
@@ -136,6 +138,30 @@ cpdefine("inline:com-chilipeppr-workspace-eaclaya", ["chilipeppr_ready"], functi
                         }
                     );
                 }
+            );
+        },
+         /**
+         * Load the Seriallua editor widget via chilipeppr.load()
+         */
+        loadLuaEditorWidget: function(callback) {
+
+            var that = this;
+
+            chilipeppr.load(
+              "#com-chilipeppr-widget-luaeditor-instance",
+              "http://raw.githubusercontent.com/chilipeppr/widget-nodemcu-files/master/auto-generated-widget.html",
+              function() {
+                // Callback after widget loaded into #com-chilipeppr-widget-luaeditor-instance
+                // Now use require.js to get reference to instantiated widget
+                cprequire(
+                  ["inline:com-chilipeppr-widget-nodemcu-files"], // the id you gave your widget
+                  function(myObjWidgetNodemcuFiles) {
+                    // Callback that is passed reference to the newly loaded widget
+                    console.log("Widget / NodeMCU Files just got loaded.", myObjWidgetNodemcuFiles);
+                    myObjWidgetNodemcuFiles.init();
+                  }
+                );
+              }
             );
         },
         /**
